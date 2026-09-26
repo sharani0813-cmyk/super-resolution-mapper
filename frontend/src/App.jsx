@@ -32,7 +32,7 @@ function MapCenterTracker({ setCenter, setBounds }) {
   return null;
 }
 
-export default function App() {
+function SRMStudio() {
   const [activeTab, setActiveTab] = useState('map');
   const [modelArch, setModelArch] = useState('esrgan');
   
@@ -421,6 +421,35 @@ export default function App() {
         )}
       </div>
 
+    </div>
+  );
+}
+
+
+export default function App() {
+  const [showStudio, setShowStudio] = React.useState(false);
+
+  if (showStudio) {
+    return <SRMStudio />;
+  }
+
+  return (
+    <div className="w-full h-screen bg-[#020617] text-white flex flex-col items-center justify-center bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:40px_40px] relative overflow-hidden">
+      <div className="z-10 text-center">
+        <h1 className="text-7xl font-black tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-500 drop-shadow-lg">
+          AtmoPixel
+        </h1>
+        <p className="text-xl text-slate-300 font-light mb-12 tracking-widest uppercase">
+          See the world without limits
+        </p>
+        <button 
+          onClick={() => setShowStudio(true)}
+          className="px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-full text-white font-bold text-lg transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto"
+        >
+          Let's Start <Activity size={20} />
+        </button>
+      </div>
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent to-[#020617]"></div>
     </div>
   );
 }
