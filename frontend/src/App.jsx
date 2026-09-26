@@ -134,12 +134,12 @@ function SRMStudio({ initialTab = "map", onBack }) {
   };
 
   return (
-    <div className="flex h-screen bg-slate-950 text-slate-200 font-sans overflow-hidden">
+    <div className="flex h-screen bg-[#030014]/80 backdrop-blur-3xl text-slate-200 font-sans overflow-hidden">
       
       {/* Left Navigation Bar */}
-      <div className="w-16 bg-slate-900 border-r border-slate-800 flex flex-col items-center py-4 justify-between z-20">
+      <div className="w-16 bg-[#030014]/60 backdrop-blur-xl border-r border-white/10 flex flex-col items-center py-4 justify-between z-20">
         <div className="flex flex-col gap-6">
-          <div className="p-2 bg-blue-600/20 text-blue-400 rounded-lg cursor-pointer">
+          <div className="p-2 bg-gradient-to-r from-cyan-500 to-blue-600/20 text-cyan-400 rounded-lg cursor-pointer">
             <Satellite size={24} />
           </div>
           <div className="p-2 text-slate-400 hover:text-white cursor-pointer transition-colors">
@@ -151,28 +151,28 @@ function SRMStudio({ initialTab = "map", onBack }) {
         </div>
         <div className="p-2 text-slate-400 hover:text-white cursor-pointer transition-colors group relative">
           <User size={24} />
-          <span className="absolute left-12 top-1 bg-slate-800 text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-50 transition-opacity">
+          <span className="absolute left-12 top-1 bg-white/10 hover:bg-white/20 text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-50 transition-opacity">
             Elakiyan K.
           </span>
         </div>
       </div>
 
       {/* Left Control Drawer */}
-      <div className="w-80 bg-slate-900 border-r border-slate-800 flex flex-col z-20 shadow-xl">
-        <div className="p-6 border-b border-slate-800">
+      <div className="w-80 bg-[#030014]/60 backdrop-blur-xl border-r border-white/10 flex flex-col z-20 shadow-xl">
+        <div className="p-6 border-b border-white/10">
           <h1 className="text-xl font-bold tracking-wide text-white">GeoEnhance AI</h1>
           <p className="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">NTRO SRM Problem ID: 26142</p>
         </div>
 
-        <div className="flex border-b border-slate-800">
+        <div className="flex border-b border-white/10">
           <button 
-            className={`flex-1 py-3 text-sm font-medium flex items-center justify-center gap-2 ${activeTab === 'map' ? 'text-blue-400 border-b-2 border-blue-400 bg-slate-800/50' : 'text-slate-400 hover:bg-slate-800/30 transition-colors'}`}
+            className={`flex-1 py-3 text-sm font-medium flex items-center justify-center gap-2 ${activeTab === 'map' ? 'text-cyan-400 border-b-2 border-blue-400 bg-white/10 hover:bg-white/20/50' : 'text-slate-400 hover:bg-white/10 hover:bg-white/20/30 transition-colors'}`}
             onClick={() => { setActiveTab('map'); resetWorkspace(); }}
           >
             <MapIcon size={16} /> Live Map
           </button>
           <button 
-            className={`flex-1 py-3 text-sm font-medium flex items-center justify-center gap-2 ${activeTab === 'upload' ? 'text-blue-400 border-b-2 border-blue-400 bg-slate-800/50' : 'text-slate-400 hover:bg-slate-800/30 transition-colors'}`}
+            className={`flex-1 py-3 text-sm font-medium flex items-center justify-center gap-2 ${activeTab === 'upload' ? 'text-cyan-400 border-b-2 border-blue-400 bg-white/10 hover:bg-white/20/50' : 'text-slate-400 hover:bg-white/10 hover:bg-white/20/30 transition-colors'}`}
             onClick={() => { setActiveTab('upload'); resetWorkspace(); }}
           >
             <UploadCloud size={16} /> Upload
@@ -181,10 +181,10 @@ function SRMStudio({ initialTab = "map", onBack }) {
 
         <div className="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
           {activeTab === 'map' && (
-            <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+            <div className="bg-white/10 hover:bg-white/20/50 border border-white/10 rounded-lg p-4">
               <h3 className="text-sm font-semibold text-slate-200 mb-2">Live Bounding Box</h3>
               {mapBounds ? (
-                <div className="flex flex-col gap-1 text-[11px] font-mono text-slate-400 bg-slate-950 p-2 rounded">
+                <div className="flex flex-col gap-1 text-[11px] font-mono text-slate-400 bg-[#030014]/80 backdrop-blur-3xl p-2 rounded">
                   <div className="flex justify-between">
                     <span>Min Lon: {mapBounds[0].toFixed(4)}</span>
                     <span>Min Lat: {mapBounds[1].toFixed(4)}</span>
@@ -204,19 +204,19 @@ function SRMStudio({ initialTab = "map", onBack }) {
           )}
 
           {activeTab === 'upload' && (
-            <div className="bg-slate-800/50 border border-slate-700 border-dashed rounded-lg p-6 flex flex-col items-center text-center">
+            <div className="bg-white/10 hover:bg-white/20/50 border border-white/10 border-dashed rounded-lg p-6 flex flex-col items-center text-center">
               <ImageIcon size={32} className="text-slate-500 mb-2" />
               <p className="text-sm text-slate-300 font-medium">Drag & Drop GeoTIFF</p>
               <p className="text-xs text-slate-500 mt-1">Accepts .tif, .tiff, .png</p>
-              <label className="mt-4 bg-slate-700 hover:bg-slate-600 text-white text-xs py-2 px-4 rounded cursor-pointer transition-colors">
+              <label className="mt-4 bg-white/10 hover:bg-slate-600 text-white text-xs py-2 px-4 rounded cursor-pointer transition-colors">
                 Browse Files
                 <input type="file" className="hidden" accept=".tif,.tiff,.png" onChange={handleFileUpload} />
               </label>
-              {file && <p className="text-xs text-blue-400 mt-3 font-mono break-all">{file.name}</p>}
+              {file && <p className="text-xs text-cyan-400 mt-3 font-mono break-all">{file.name}</p>}
             </div>
           )}
 
-          <div className="flex flex-col gap-4 mt-auto border-t border-slate-800 pt-6">
+          <div className="flex flex-col gap-4 mt-auto border-t border-white/10 pt-6">
             
             {error && <div className="text-xs text-red-400 bg-red-950/30 p-3 rounded border border-red-900/50 break-words">{error}</div>}
 
@@ -224,8 +224,8 @@ function SRMStudio({ initialTab = "map", onBack }) {
               onClick={executePipeline}
               disabled={isProcessing || (activeTab === 'upload' && !file) || result}
               className={`w-full py-3 rounded-md font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
-                isProcessing || result ? 'bg-slate-800 text-slate-500 cursor-not-allowed' 
-                : 'bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.3)]'
+                isProcessing || result ? 'bg-white/10 hover:bg-white/20 text-slate-500 cursor-not-allowed' 
+                : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.3)]'
               }`}
             >
               {isProcessing ? (
@@ -241,11 +241,11 @@ function SRMStudio({ initialTab = "map", onBack }) {
       </div>
 
       {/* Main Workspace Area */}
-      <div className="flex-1 relative bg-slate-950 overflow-hidden flex items-center justify-center">
+      <div className="flex-1 relative bg-[#030014]/80 backdrop-blur-3xl overflow-hidden flex items-center justify-center">
         {/* Loading Overlay */}
         {isProcessing && (
-          <div className="absolute inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center">
-            <Loader2 size={48} className="text-blue-500 animate-spin mb-4" />
+          <div className="absolute inset-0 z-50 bg-[#030014]/80 backdrop-blur-3xl/80 backdrop-blur-sm flex flex-col items-center justify-center">
+            <Loader2 size={48} className="text-cyan-400 animate-spin mb-4" />
             <h2 className="text-xl font-semibold text-white tracking-wide">{loadingStage}</h2>
             <p className="text-slate-400 text-sm mt-2">This process may take a few moments...</p>
           </div>
@@ -266,7 +266,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
                 </MapContainer>
                 
                 {/* Visual indicator that the entire visible map viewport is the ROI */}
-                <div className="absolute inset-8 border-2 border-blue-500/50 z-10 pointer-events-none bg-blue-500/5 backdrop-blur-[0.5px]">
+                <div className="absolute inset-8 border-2 border-cyan-500/50 z-10 pointer-events-none bg-blue-500/5 backdrop-blur-[0.5px]">
                   {/* Corner accents */}
                   <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-blue-400 -mt-[3px] -ml-[3px]" />
                   <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-blue-400 -mt-[3px] -mr-[3px]" />
@@ -281,10 +281,10 @@ function SRMStudio({ initialTab = "map", onBack }) {
                 </div>
               </>
             ) : (
-              <div className="w-full h-full flex items-center justify-center p-12 bg-slate-900/50 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:20px_20px]">
+              <div className="w-full h-full flex items-center justify-center p-12 bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl  ">
                 {originalPreview ? (
                   <div className="relative max-w-2xl w-full aspect-video">
-                     <img src={originalPreview} alt="Preview" className="absolute inset-0 w-full h-full object-contain rounded-lg border border-slate-700 shadow-2xl bg-slate-900" />
+                     <img src={originalPreview} alt="Preview" className="absolute inset-0 w-full h-full object-contain rounded-lg border border-white/10 shadow-2xl bg-[#030014]/60 backdrop-blur-xl" />
                   </div>
                 ) : (
                   <div className="text-slate-600 flex flex-col items-center">
@@ -297,8 +297,8 @@ function SRMStudio({ initialTab = "map", onBack }) {
           </div>
         ) : (
           // Post-execution Split Screen
-          <div className="absolute inset-0 z-0 flex items-center justify-center p-12 bg-slate-900 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:20px_20px]">
-            <div className="relative w-full max-w-5xl aspect-video rounded-xl overflow-hidden border border-slate-700 shadow-[0_0_50px_rgba(0,0,0,0.5)] select-none">
+          <div className="absolute inset-0 z-0 flex items-center justify-center p-12 bg-[#030014]/60 backdrop-blur-xl  ">
+            <div className="relative w-full max-w-5xl aspect-video rounded-xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] select-none">
               
               {/* Background (Enhanced) */}
               <img src={result.preview_base64} alt="Enhanced" className="absolute inset-0 w-full h-full object-cover" />
@@ -347,15 +347,15 @@ function SRMStudio({ initialTab = "map", onBack }) {
             </div>
 
             {/* Floating Analysis Card */}
-            <div className="absolute bottom-12 right-12 bg-slate-900/95 backdrop-blur-md border border-slate-700 p-6 rounded-xl shadow-2xl w-[340px] z-30">
-              <h3 className="text-white font-bold mb-5 flex items-center gap-2"><Activity size={18} className="text-blue-400"/> Live Analysis Metrics</h3>
+            <div className="absolute bottom-12 right-12 bg-[#030014]/90 backdrop-blur-2xl backdrop-blur-md border border-white/10 p-6 rounded-xl shadow-2xl w-[340px] z-30">
+              <h3 className="text-white font-bold mb-5 flex items-center gap-2"><Activity size={18} className="text-cyan-400"/> Live Analysis Metrics</h3>
               
               <div className="mb-5">
                 <div className="flex justify-between text-xs mb-1.5">
                   <span className="text-slate-400">Peak Signal-to-Noise Ratio (PSNR)</span>
-                  <span className="text-blue-400 font-mono font-bold">{result.psnr.toFixed(2)} dB</span>
+                  <span className="text-cyan-400 font-mono font-bold">{result.psnr.toFixed(2)} dB</span>
                 </div>
-                <div className="w-full bg-slate-800 rounded-full h-1.5">
+                <div className="w-full bg-white/10 hover:bg-white/20 rounded-full h-1.5">
                   <div className="bg-blue-500 h-1.5 rounded-full" style={{ width: `${Math.min((result.psnr / 40) * 100, 100)}%` }}></div>
                 </div>
               </div>
@@ -363,10 +363,10 @@ function SRMStudio({ initialTab = "map", onBack }) {
               <div className="mb-7">
                 <div className="flex justify-between text-xs mb-1.5">
                   <span className="text-slate-400">Structural Similarity (SSIM)</span>
-                  <span className="text-emerald-400 font-mono font-bold">{result.ssim.toFixed(4)}</span>
+                  <span className="text-fuchsia-400 font-mono font-bold">{result.ssim.toFixed(4)}</span>
                 </div>
-                <div className="w-full bg-slate-800 rounded-full h-1.5">
-                  <div className="bg-emerald-500 h-1.5 rounded-full" style={{ width: `${result.ssim * 100}%` }}></div>
+                <div className="w-full bg-white/10 hover:bg-white/20 rounded-full h-1.5">
+                  <div className="bg-fuchsia-500 h-1.5 rounded-full" style={{ width: `${result.ssim * 100}%` }}></div>
                 </div>
               </div>
 
@@ -374,13 +374,13 @@ function SRMStudio({ initialTab = "map", onBack }) {
                 <div className="flex gap-2 w-full">
                   <button 
                     onClick={handleDownloadGeoTIFF}
-                    className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-lg shadow-blue-500/20"
+                    className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-lg shadow-cyan-500/20"
                   >
                     <Download size={14} /> GeoTIFF
                   </button>
                   <button 
                     onClick={handleDownloadImage}
-                    className="flex-1 bg-transparent border border-slate-600 hover:border-slate-500 hover:bg-slate-800 text-slate-200 py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
+                    className="flex-1 bg-transparent border border-slate-600 hover:border-slate-500 hover:bg-white/10 hover:bg-white/20 text-slate-200 py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
                   >
                     <Camera size={14} /> PNG
                   </button>
@@ -388,7 +388,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
                 
                 <button 
                   onClick={resetWorkspace}
-                  className="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 mt-1"
+                  className="w-full bg-white/10 hover:bg-white/20 hover:bg-white/10 text-slate-300 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 mt-1"
                 >
                   <RotateCcw size={16} /> Reset Workspace
                 </button>
@@ -414,7 +414,7 @@ export default function App() {
   }
 
   return (
-    <div className="w-full h-screen bg-[#020617] text-white flex flex-col items-center justify-center bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:40px_40px] relative overflow-hidden">
+    <div className="w-full h-screen bg-[#030014] text-white flex flex-col items-center justify-center   relative overflow-hidden">
       
       {currentView === 'home' && (
         <div className="z-10 text-center animate-in fade-in zoom-in duration-500">
@@ -426,7 +426,7 @@ export default function App() {
           </p>
           <button 
             onClick={() => setCurrentView('selection')}
-            className="px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-full text-white font-bold text-lg transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto"
+            className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-full text-white font-bold text-lg transition-all shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto"
           >
             Let's Start <Activity size={20} />
           </button>
@@ -445,10 +445,10 @@ export default function App() {
             {/* Live Map Card */}
             <div 
               onClick={() => { setSelectedTab('map'); setCurrentView('studio'); }}
-              className="bg-slate-900/80 backdrop-blur-sm border border-slate-700 hover:border-blue-500 rounded-2xl p-10 cursor-pointer transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(37,99,235,0.2)] group"
+              className="bg-white/[0.03] backdrop-blur-xl backdrop-blur-sm border border-white/10 hover:border-cyan-500 rounded-2xl p-10 cursor-pointer transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] group"
             >
               <div className="bg-blue-500/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <MapIcon className="text-blue-400" size={32} />
+                <MapIcon className="text-cyan-400" size={32} />
               </div>
               <h3 className="text-2xl font-bold mb-3">Live Map</h3>
               <p className="text-slate-400 leading-relaxed">
@@ -459,10 +459,10 @@ export default function App() {
             {/* Upload Card */}
             <div 
               onClick={() => { setSelectedTab('upload'); setCurrentView('studio'); }}
-              className="bg-slate-900/80 backdrop-blur-sm border border-slate-700 hover:border-emerald-500 rounded-2xl p-10 cursor-pointer transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)] group"
+              className="bg-white/[0.03] backdrop-blur-xl backdrop-blur-sm border border-white/10 hover:border-fuchsia-500 rounded-2xl p-10 cursor-pointer transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(217,70,239,0.2)] group"
             >
-              <div className="bg-emerald-500/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <UploadCloud className="text-emerald-400" size={32} />
+              <div className="bg-fuchsia-500/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <UploadCloud className="text-fuchsia-400" size={32} />
               </div>
               <h3 className="text-2xl font-bold mb-3">Upload File</h3>
               <p className="text-slate-400 leading-relaxed">
