@@ -1,0 +1,10 @@
+fastapi[standard]
+uvicorn
+rasterio
+numpy
+torch
+torchvision
+python-multipart
+pillow
+modal
+pystac-client
