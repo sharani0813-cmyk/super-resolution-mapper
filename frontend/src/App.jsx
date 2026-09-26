@@ -32,8 +32,8 @@ function MapCenterTracker({ setCenter, setBounds }) {
   return null;
 }
 
-function SRMStudio() {
-  const [activeTab, setActiveTab] = useState('map');
+function SRMStudio({ initialTab = "map", onBack }) {
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [modelArch, setModelArch] = useState('esrgan');
   
   // Map State
@@ -426,29 +426,75 @@ function SRMStudio() {
 }
 
 
-export default function App() {
-  const [showStudio, setShowStudio] = React.useState(false);
 
-  if (showStudio) {
-    return <SRMStudio />;
+export default function App() {
+  const [currentView, setCurrentView] = React.useState('home'); // home, selection, studio
+  const [selectedTab, setSelectedTab] = React.useState('map');
+
+  if (currentView === 'studio') {
+    return <SRMStudio initialTab={selectedTab} onBack={() => setCurrentView('selection')} />;
   }
 
   return (
     <div className="w-full h-screen bg-[#020617] text-white flex flex-col items-center justify-center bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:40px_40px] relative overflow-hidden">
-      <div className="z-10 text-center">
-        <h1 className="text-7xl font-black tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-500 drop-shadow-lg">
-          AtmoPixel
-        </h1>
-        <p className="text-xl text-slate-300 font-light mb-12 tracking-widest uppercase">
-          See the world without limits
-        </p>
-        <button 
-          onClick={() => setShowStudio(true)}
-          className="px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-full text-white font-bold text-lg transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto"
-        >
-          Let's Start <Activity size={20} />
-        </button>
-      </div>
+      
+      {currentView === 'home' && (
+        <div className="z-10 text-center animate-in fade-in zoom-in duration-500">
+          <h1 className="text-7xl font-black tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-500 drop-shadow-lg">
+            AtmoPixel
+          </h1>
+          <p className="text-xl text-slate-300 font-light mb-12 tracking-widest uppercase">
+            See the world without limits
+          </p>
+          <button 
+            onClick={() => setCurrentView('selection')}
+            className="px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-full text-white font-bold text-lg transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto"
+          >
+            Let's Start <Activity size={20} />
+          </button>
+        </div>
+      )}
+
+      {currentView === 'selection' && (
+        <div className="z-10 w-full max-w-4xl px-6 animate-in fade-in slide-in-from-bottom-8 duration-500">
+          <button onClick={() => setCurrentView('home')} className="mb-8 text-slate-400 hover:text-white flex items-center gap-2 transition-colors">
+             <ChevronDown className="rotate-90" size={16} /> Back
+          </button>
+          
+          <h2 className="text-4xl font-bold mb-10 text-center">Choose your workflow</h2>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Live Map Card */}
+            <div 
+              onClick={() => { setSelectedTab('map'); setCurrentView('studio'); }}
+              className="bg-slate-900/80 backdrop-blur-sm border border-slate-700 hover:border-blue-500 rounded-2xl p-10 cursor-pointer transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(37,99,235,0.2)] group"
+            >
+              <div className="bg-blue-500/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <MapIcon className="text-blue-400" size={32} />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Live Map</h3>
+              <p className="text-slate-400 leading-relaxed">
+                Interactively scan the globe and stream real-time Sentinel-2 satellite imagery. The AI will upscale your selected region on the fly.
+              </p>
+            </div>
+
+            {/* Upload Card */}
+            <div 
+              onClick={() => { setSelectedTab('upload'); setCurrentView('studio'); }}
+              className="bg-slate-900/80 backdrop-blur-sm border border-slate-700 hover:border-emerald-500 rounded-2xl p-10 cursor-pointer transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)] group"
+            >
+              <div className="bg-emerald-500/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <UploadCloud className="text-emerald-400" size={32} />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Upload File</h3>
+              <p className="text-slate-400 leading-relaxed">
+                Already have your own satellite imagery? Upload local GeoTIFF or PNG files to pass them through the super-resolution pipeline.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent to-[#020617]"></div>
     </div>
   );
