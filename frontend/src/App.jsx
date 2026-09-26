@@ -34,7 +34,7 @@ function MapCenterTracker({ setCenter, setBounds }) {
 
 function SRMStudio({ initialTab = "map", onBack }) {
   const [activeTab, setActiveTab] = useState(initialTab);
-  const [modelArch, setModelArch] = useState('esrgan');
+  
   
   // Map State
   const [viewportCenter, setViewportCenter] = useState([28.6139, 77.2090]); // New Delhi default
@@ -217,29 +217,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
           )}
 
           <div className="flex flex-col gap-4 mt-auto border-t border-slate-800 pt-6">
-            <div>
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">Model Architecture</label>
-              <div className="relative">
-                <select 
-                  value={modelArch}
-                  onChange={(e) => setModelArch(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 text-slate-200 text-sm rounded-md p-2.5 appearance-none focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
-                >
-                  <option value="esrgan">ESRGAN (RRDBNet)</option>
-                  <option value="swinir">SwinIR (Transformer)</option>
-                </select>
-                <ChevronDown size={16} className="absolute right-3 top-3 text-slate-500 pointer-events-none" />
-              </div>
-            </div>
             
-            <div>
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">Upscale Factor</label>
-              <div className="bg-slate-950 border border-slate-700 text-slate-200 text-sm rounded-md p-2.5 flex justify-between">
-                <span>Super Resolution</span>
-                <span className="text-blue-400 font-bold">4x</span>
-              </div>
-            </div>
-
             {error && <div className="text-xs text-red-400 bg-red-950/30 p-3 rounded border border-red-900/50 break-words">{error}</div>}
 
             <button 
@@ -251,11 +229,11 @@ function SRMStudio({ initialTab = "map", onBack }) {
               }`}
             >
               {isProcessing ? (
-                <><Loader2 size={16} className="animate-spin" /> Processing...</>
+                <><Loader2 size={16} className="animate-spin" /> Enhancing...</>
               ) : result ? (
                 'Enhancement Complete'
               ) : (
-                'Execute SRM Pipeline'
+                'Enhance'
               )}
             </button>
           </div>
