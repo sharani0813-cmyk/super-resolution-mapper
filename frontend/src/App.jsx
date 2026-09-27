@@ -383,16 +383,21 @@ const executePipeline = async () => {
                 </div>
               </>
             ) : (
-              <div className="w-full h-full flex items-center justify-center p-12 bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl  ">
+                              <div onDragOver={handleDragOver} onDrop={handleDrop} className="w-full h-full flex items-center justify-center p-12 bg-white/[0.02] backdrop-blur-xl border-2 border-dashed border-white/10 hover:border-white/30 transition-colors rounded-2xl">
                 {originalPreview ? (
                   <div className="relative max-w-2xl w-full aspect-video">
                      <img src={originalPreview} alt="Preview" className="absolute inset-0 w-full h-full object-contain rounded-lg border border-white/10  bg-black/60 backdrop-blur-xl" />
                   </div>
                 ) : (
-                  <div className="text-slate-600 flex flex-col items-center">
-                    <ImageIcon size={64} className="mb-4 opacity-50" />
-                    <p className="text-lg">Select a file from the control panel</p>
-                  </div>
+                  <div className="text-zinc-500 flex flex-col items-center">
+                      <UploadCloud size={64} className="mb-4 opacity-50 text-white/50" />
+                      <p className="text-xl text-zinc-300 font-medium">Drag and drop to upload</p>
+                      <p className="text-sm mt-2 mb-6 text-zinc-500">Or click below to browse your files</p>
+                      <label className="bg-white/10 hover:bg-white/20 text-white text-sm font-medium py-3 px-6 rounded-md cursor-pointer transition-colors shadow-lg shadow-white/5">
+                        Browse Files
+                        <input type="file" className="hidden" accept=".tif,.tiff,.png" onChange={handleFileUpload} />
+                      </label>
+                    </div>
                 )}
               </div>
             )}
