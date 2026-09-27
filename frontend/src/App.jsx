@@ -95,7 +95,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
   const [sliderPos, setSliderPos] = useState(50);
   const [error, setError] = useState(null);
 
-  const handleFileUpload = (e) => {
+    const handleFileUpload = (e) => {
     const selected = e.target.files[0];
     if (selected) {
       setFile(selected);
@@ -103,7 +103,20 @@ function SRMStudio({ initialTab = "map", onBack }) {
     }
   };
 
-  const executePipeline = async () => {
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const selected = e.dataTransfer.files[0];
+      setFile(selected);
+      setOriginalPreview(URL.createObjectURL(selected));
+    }
+  };
+
+const executePipeline = async () => {
     setIsProcessing(true);
     setError(null);
 
@@ -248,7 +261,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
           )}
 
           {activeTab === 'upload' && (
-            <div className="bg-white/10 hover:bg-white/20/50 border border-white/10 border-dashed rounded-lg p-6 flex flex-col items-center text-center">
+            <div onDragOver={handleDragOver} onDrop={handleDrop} className="bg-white/10 hover:bg-white/20/50 border border-white/10 border-dashed rounded-lg p-6 flex flex-col items-center text-center transition-colors">
               <ImageIcon size={32} className="text-slate-500 mb-2" />
               <p className="text-sm text-zinc-400 font-medium">Drag & Drop File</p>
               <p className="text-xs text-slate-500 mt-1">Accepts .tif, .tiff, .png</p>
