@@ -140,7 +140,8 @@ function SRMStudio({ initialTab = "map", onBack }) {
     e.preventDefault();
     if (!result || !result.download_url) return;
     try {
-      const response = await fetch(`http://localhost:8000${result.download_url}`);
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const response = await fetch(`${apiUrl}${result.download_url}`);
       if (!response.ok) throw new Error('Network response was not ok');
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
