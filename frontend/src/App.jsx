@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Satellite, Layers, Settings, User, Image as ImageIcon, Camera,
-  UploadCloud, Download, RotateCcw, Activity, Map as MapIcon, ChevronDown, Loader2
+  UploadCloud, Download, RotateCcw, Activity, Map as MapIcon, ChevronDown, Loader2, Navigation
 } from 'lucide-react';
-import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, useMapEvents, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { upscaleImage, extractLiveTile } from './api';
+
+
+function MapFlyTo({ location }) {
+  const map = useMap();
+  useEffect(() => {
+    if (location) {
+      map.flyTo(location, 16);
+    }
+  }, [location, map]);
+  return null;
+}
 
 // Hook to track the map center coordinates and viewport bounding box
 function MapCenterTracker({ setCenter, setBounds }) {
@@ -38,7 +49,34 @@ function SRMStudio({ initialTab = "map", onBack }) {
   
   // Map State
   const [viewportCenter, setViewportCenter] = useState([28.6139, 77.2090]); // New Delhi default
-  const [mapBounds, setMapBounds] = useState(null); // [min_lon, min_lat, max_lon, max_lat]
+  const [mapBounds, setMapBounds] = useState(null);
+
+  // Locate Me state
+  const [flyToLocation, setFlyToLocation] = useState(null);
+  const [isLocating, setIsLocating] = useState(false);
+
+  const handleLocateMe = () => {
+    setIsLocating(true);
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser.");
+      setIsLocating(false);
+      return;
+    }
+    
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setFlyToLocation([latitude, longitude]);
+        setIsLocating(false);
+      },
+      (err) => {
+        setError("Location access denied. Please enable location permissions in your browser.");
+        setIsLocating(false);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  };
+
   
   // Upload State
   const [file, setFile] = useState(null);
@@ -256,13 +294,24 @@ function SRMStudio({ initialTab = "map", onBack }) {
           <div className="absolute inset-0 z-0">
             {activeTab === 'map' ? (
               <>
-                <MapContainer center={viewportCenter} zoom={15} className="w-full h-full" zoomControl={false}>
+                
+                  <button 
+                    onClick={handleLocateMe}
+                    disabled={isLocating}
+                    className="absolute top-12 right-12 z-20 bg-black/80 hover:bg-zinc-800 text-white p-3 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.1)] border border-white/20 transition-all flex items-center justify-center group"
+                    title="Locate Me"
+                  >
+                    {isLocating ? <Loader2 size={20} className="animate-spin text-zinc-400" /> : <Navigation size={20} className="text-zinc-200 group-hover:text-white" />}
+                  </button>
+
+                  <MapContainer center={viewportCenter} zoom={15} className="w-full h-full" zoomControl={false}>
                   <TileLayer 
                     url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                     maxZoom={19}
                     attribution="Tiles &copy; Esri"
                   />
                   <MapCenterTracker setCenter={setViewportCenter} setBounds={setMapBounds} />
+                    <MapFlyTo location={flyToLocation} />
                 </MapContainer>
                 
                 {/* Visual indicator that the entire visible map viewport is the ROI */}
