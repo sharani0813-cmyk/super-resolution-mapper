@@ -455,20 +455,38 @@ function SRMStudio({ initialTab = "map", onBack }) {
               </div>
 
               <div className="flex flex-col gap-3">
-                <div className="flex gap-2 w-full">
-                  <button 
-                    onClick={handleDownloadGeoTIFF}
-                    className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5  shadow-white/10"
-                  >
-                    <Download size={14} /> Full Res
-                  </button>
-                  <button 
-                    onClick={handleDownloadImage}
-                    className="flex-1 bg-transparent border border-slate-600 hover:border-slate-500 hover:bg-white/10 hover:bg-white/20 text-zinc-300 py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
-                  >
-                    <Camera size={14} /> Snapshot
-                  </button>
-                </div>
+                {(()=>{
+                    const isGeoTiffOutput = result?.download_url && result.download_url.toLowerCase().match(/\.tiff?$/);
+                    return (
+                      <div className="flex gap-2 w-full">
+                        <button 
+                          onClick={(e) => {
+                            if (!isGeoTiffOutput) {
+                              e.preventDefault();
+                              alert("PNG image cannot be converted to GeoTIFF, try uploading GeoTIFF or download the enhanced image in PNG format");
+                              return;
+                            }
+                            handleDownloadGeoTIFF(e);
+                          }}
+                          className={`flex-1 py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 ${isGeoTiffOutput ? 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-white/10' : 'bg-white/5 border border-white/10 text-zinc-600 cursor-not-allowed'}`}
+                        >
+                          <Download size={14} /> GeoTIFF
+                        </button>
+                        <button 
+                          onClick={(e) => {
+                            if (!isGeoTiffOutput) {
+                               handleDownloadGeoTIFF(e);
+                            } else {
+                               handleDownloadImage(e);
+                            }
+                          }}
+                          className={`flex-1 py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 ${!isGeoTiffOutput ? 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-white/10' : 'bg-transparent border border-slate-600 hover:border-slate-500 hover:bg-white/10 text-zinc-300'}`}
+                        >
+                          <Camera size={14} /> PNG
+                        </button>
+                      </div>
+                    )
+                  })()}
                 
                 <button 
                   onClick={resetWorkspace}
