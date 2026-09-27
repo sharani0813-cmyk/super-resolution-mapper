@@ -197,7 +197,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
       </div>
 
       {/* Left Control Drawer */}
-      <div className="w-80 bg-black/60 backdrop-blur-xl border-r border-white/10 flex flex-col z-20 shadow-xl">
+      <div className="w-80 bg-black/60 backdrop-blur-xl border-r border-white/10 flex flex-col z-20 ">
         <div className="p-6 border-b border-white/10">
           <h1 className="text-xl font-bold tracking-wide text-white">GeoEnhance AI</h1>
           <p className="text-xs text-zinc-500 mt-1 uppercase tracking-wider font-semibold">NTRO SRM Problem ID: 26142</p>
@@ -264,7 +264,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
               disabled={isProcessing || (activeTab === 'upload' && !file) || result}
               className={`w-full py-3 rounded-md font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
                 isProcessing || result ? 'bg-white/5 text-zinc-600 cursor-not-allowed' 
-                : 'bg-white hover:bg-zinc-200 text-black shadow-[0_0_15px_rgba(255,255,255,0.15)]'
+                : 'bg-white hover:bg-zinc-200 text-black '
               }`}
             >
               {isProcessing ? (
@@ -299,14 +299,14 @@ function SRMStudio({ initialTab = "map", onBack }) {
                   <button 
                     onClick={handleLocateMe}
                     disabled={isLocating}
-                    className="absolute top-12 right-12 z-20 bg-black/80 hover:bg-zinc-800 text-white p-3 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.1)] border border-white/20 transition-all flex items-center justify-center group"
+                    className="absolute top-12 right-12 z-20 bg-black/80 hover:bg-zinc-800 text-white p-3 rounded-full  border border-white/20 transition-all flex items-center justify-center group"
                     title="Locate Me"
                   >
                     {isLocating ? <Loader2 size={20} className="animate-spin text-zinc-400" /> : <Navigation size={20} className="text-zinc-200 group-hover:text-white" />}
                   </button>
 
                   {/* Zoom Controls */}
-                  <div className="absolute bottom-12 right-12 z-20 flex flex-col shadow-[0_0_15px_rgba(255,255,255,0.1)] rounded-xl overflow-hidden border border-white/20 bg-black/80 backdrop-blur-md">
+                  <div className="absolute bottom-12 right-12 z-20 flex flex-col  rounded-xl overflow-hidden border border-white/20 bg-black/80 backdrop-blur-md">
                     <button 
                       onClick={() => mapRef?.zoomIn()}
                       className="p-3 text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors border-b border-white/10 flex items-center justify-center"
@@ -353,7 +353,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
               <div className="w-full h-full flex items-center justify-center p-12 bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl  ">
                 {originalPreview ? (
                   <div className="relative max-w-2xl w-full aspect-video">
-                     <img src={originalPreview} alt="Preview" className="absolute inset-0 w-full h-full object-contain rounded-lg border border-white/10 shadow-2xl bg-black/60 backdrop-blur-xl" />
+                     <img src={originalPreview} alt="Preview" className="absolute inset-0 w-full h-full object-contain rounded-lg border border-white/10  bg-black/60 backdrop-blur-xl" />
                   </div>
                 ) : (
                   <div className="text-slate-600 flex flex-col items-center">
@@ -367,11 +367,11 @@ function SRMStudio({ initialTab = "map", onBack }) {
         ) : (
           // Post-execution Split Screen
           <div className="absolute inset-0 z-0 flex items-center justify-center p-12 bg-black/60 backdrop-blur-xl  ">
-            <div className="relative w-full max-w-5xl aspect-video rounded-xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] select-none">
+            <div className="relative w-full max-w-5xl aspect-video rounded-xl overflow-hidden border border-white/10  select-none">
               
               {/* Background (Enhanced) */}
               <img src={result.preview_base64} alt="Enhanced" className="absolute inset-0 w-full h-full object-cover" />
-              <div className="absolute top-4 right-4 bg-black/60 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-full border border-white/10 shadow-lg z-10 pointer-events-none">
+              <div className="absolute top-4 right-4 bg-black/60 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-full border border-white/10  z-10 pointer-events-none">
                 AI Enhanced (4x)
               </div>
 
@@ -385,7 +385,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
                   alt="Original" 
                   className={`absolute inset-0 w-full h-full object-cover opacity-90 brightness-90 ${!originalPreview ? 'blur-[8px]' : 'blur-[2px]'}`} 
                 />
-                <div className="absolute top-4 left-4 bg-black/60 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-full border border-white/10 shadow-lg pointer-events-none">
+                <div className="absolute top-4 left-4 bg-black/60 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-full border border-white/10  pointer-events-none">
                   Input (Bicubic)
                 </div>
               </div>
@@ -402,10 +402,10 @@ function SRMStudio({ initialTab = "map", onBack }) {
 
               {/* Divider Line */}
               <div 
-                className="absolute top-0 bottom-0 w-1 bg-white/80 shadow-[0_0_15px_rgba(0,0,0,0.8)] z-10 pointer-events-none transform -translate-x-1/2"
+                className="absolute top-0 bottom-0 w-1 bg-white/80  z-10 pointer-events-none transform -translate-x-1/2"
                 style={{ left: `${sliderPos}%` }}
               >
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-800">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full  flex items-center justify-center text-slate-800">
                   <div className="flex gap-1">
                     <div className="w-0.5 h-3 bg-slate-400 rounded-full" />
                     <div className="w-0.5 h-3 bg-slate-400 rounded-full" />
@@ -416,7 +416,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
             </div>
 
             {/* Floating Analysis Card */}
-            <div className="absolute bottom-12 right-12 bg-black/90 backdrop-blur-2xl backdrop-blur-md border border-white/10 p-6 rounded-xl shadow-2xl w-[340px] z-30">
+            <div className="absolute bottom-12 right-12 bg-black/90 backdrop-blur-2xl backdrop-blur-md border border-white/10 p-6 rounded-xl  w-[340px] z-30">
               <h3 className="text-white font-bold mb-5 flex items-center gap-2"><Activity size={18} className="text-zinc-200"/> Live Analysis Metrics</h3>
               
               <div className="mb-5">
@@ -443,7 +443,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
                 <div className="flex gap-2 w-full">
                   <button 
                     onClick={handleDownloadGeoTIFF}
-                    className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-lg shadow-white/10"
+                    className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5  shadow-white/10"
                   >
                     <Download size={14} /> GeoTIFF
                   </button>
@@ -485,9 +485,23 @@ export default function App() {
   return (
     <div className="w-full h-screen bg-black text-white flex flex-col items-center justify-center   relative overflow-hidden">
       
+      
+      {currentView === 'home' && (
+        <>
+          {/* Giant Dark Planet */}
+          <div className="absolute -top-[20%] -right-[10%] w-[800px] h-[800px] rounded-full bg-gradient-to-br from-zinc-800 to-black opacity-30 pointer-events-none blur-[1px] border border-white/5"></div>
+          
+          {/* Distant Moon */}
+          <div className="absolute bottom-[10%] left-[5%] w-32 h-32 rounded-full bg-gradient-to-tl from-zinc-700 to-black opacity-40 pointer-events-none border border-white/10"></div>
+          
+          {/* Deep Space Dust / Ring effect */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[20%] bg-white/5 rounded-[100%] blur-3xl transform -rotate-12 pointer-events-none opacity-20"></div>
+        </>
+      )}
+
       {currentView === 'home' && (
         <div className="z-10 text-center animate-in fade-in zoom-in duration-500">
-          <h1 className="text-7xl font-black tracking-tighter mb-4 text-white tracking-tighter drop-shadow-[0_0_20px_rgba(255,255,255,0.2)] font-sans">
+          <h1 className="text-7xl font-black tracking-tighter mb-4 text-white tracking-tighter  font-sans">
             AtmoPixel
           </h1>
           <p className="text-xl text-zinc-400 font-light mb-12 tracking-widest uppercase">
@@ -495,7 +509,7 @@ export default function App() {
           </p>
           <button 
             onClick={() => setCurrentView('selection')}
-            className="px-8 py-3 bg-white hover:bg-zinc-200 rounded-full text-black font-semibold text-lg transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto"
+            className="px-8 py-3 bg-white hover:bg-zinc-200 rounded-full text-black font-semibold text-lg transition-all  hover: hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto"
           >
             Let's Start <Activity size={20} />
           </button>
@@ -514,7 +528,7 @@ export default function App() {
             {/* Live Map Card */}
             <div 
               onClick={() => { setSelectedTab('map'); setCurrentView('studio'); }}
-              className="bg-white/[0.03] backdrop-blur-xl backdrop-blur-sm border border-white/10 hover:border-white/30 rounded-2xl p-10 cursor-pointer transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] group"
+              className="bg-white/[0.03] backdrop-blur-xl backdrop-blur-sm border border-white/10 hover:border-white/30 rounded-2xl p-10 cursor-pointer transition-all hover:scale-105 hover: group"
             >
               <div className="bg-white/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <MapIcon className="text-zinc-200" size={32} />
@@ -528,7 +542,7 @@ export default function App() {
             {/* Upload Card */}
             <div 
               onClick={() => { setSelectedTab('upload'); setCurrentView('studio'); }}
-              className="bg-white/[0.03] backdrop-blur-xl backdrop-blur-sm border border-white/10 hover:border-white/30 rounded-2xl p-10 cursor-pointer transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(217,70,239,0.2)] group"
+              className="bg-white/[0.03] backdrop-blur-xl backdrop-blur-sm border border-white/10 hover:border-white/30 rounded-2xl p-10 cursor-pointer transition-all hover:scale-105 hover: group"
             >
               <div className="bg-zinc-300/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <UploadCloud className="text-zinc-300" size={32} />
