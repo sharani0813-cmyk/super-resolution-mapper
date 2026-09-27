@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Satellite, Layers, Settings, User, Image as ImageIcon, Camera,
-  UploadCloud, Download, RotateCcw, Activity, Map as MapIcon, ChevronDown, Loader2, Navigation
+  UploadCloud, Download, RotateCcw, Activity, Map as MapIcon, ChevronDown, Loader2, Navigation, Plus, Minus
 } from 'lucide-react';
 import { MapContainer, TileLayer, useMapEvents, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -52,6 +52,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
   const [mapBounds, setMapBounds] = useState(null);
 
   // Locate Me state
+  const [mapRef, setMapRef] = useState(null);
   const [flyToLocation, setFlyToLocation] = useState(null);
   const [isLocating, setIsLocating] = useState(false);
 
@@ -304,7 +305,26 @@ function SRMStudio({ initialTab = "map", onBack }) {
                     {isLocating ? <Loader2 size={20} className="animate-spin text-zinc-400" /> : <Navigation size={20} className="text-zinc-200 group-hover:text-white" />}
                   </button>
 
-                  <MapContainer center={viewportCenter} zoom={15} className="w-full h-full" zoomControl={false}>
+                  {/* Zoom Controls */}
+                  <div className="absolute bottom-12 right-12 z-20 flex flex-col shadow-[0_0_15px_rgba(255,255,255,0.1)] rounded-xl overflow-hidden border border-white/20 bg-black/80 backdrop-blur-md">
+                    <button 
+                      onClick={() => mapRef?.zoomIn()}
+                      className="p-3 text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors border-b border-white/10 flex items-center justify-center"
+                      title="Zoom In"
+                    >
+                      <Plus size={20} />
+                    </button>
+                    <button 
+                      onClick={() => mapRef?.zoomOut()}
+                      className="p-3 text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors flex items-center justify-center"
+                      title="Zoom Out"
+                    >
+                      <Minus size={20} />
+                    </button>
+                  </div>
+
+
+                  <MapContainer ref={setMapRef} center={viewportCenter} zoom={15} className="w-full h-full" zoomControl={false}>
                   <TileLayer 
                     url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                     maxZoom={19}
