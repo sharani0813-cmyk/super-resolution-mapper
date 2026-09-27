@@ -12,7 +12,7 @@ function MapFlyTo({ location }) {
   const map = useMap();
   useEffect(() => {
     if (location) {
-      map.flyTo(location, 19, { duration: 1.5 });
+      map.flyTo(location, 19, { duration: 7.0, easeLinearity: 0.1 });
     }
   }, [location, map]);
   return null;
@@ -48,7 +48,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
   
   
   // Map State
-  const [viewportCenter, setViewportCenter] = useState([28.6139, 77.2090]); // New Delhi default
+  const [viewportCenter, setViewportCenter] = useState([40.7128, -74.0060]); // Start in New York for grand fly-in
   const [mapBounds, setMapBounds] = useState(null);
 
   // Locate Me state
@@ -338,7 +338,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
                   </div>
 
 
-                  <MapContainer ref={setMapRef} center={viewportCenter} zoom={15} className="w-full h-full" zoomControl={false}>
+                  <MapContainer ref={setMapRef} center={viewportCenter} zoom={4} className="w-full h-full" zoomControl={false}>
                   <TileLayer 
                     url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                     maxZoom={19}
