@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Satellite, Layers, Settings, User, Image as ImageIcon, Camera,
-  UploadCloud, Download, RotateCcw, Activity, Map as MapIcon, ChevronDown, Loader2, Navigation, Plus, Minus, Home
+  UploadCloud, Download, RotateCcw, Activity, Map as MapIcon, ChevronDown, Loader2, Navigation, Plus, Minus, Home, Search
 } from 'lucide-react';
 import { MapContainer, TileLayer, useMapEvents, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -56,6 +56,29 @@ function SRMStudio({ initialTab = "map", onBack, onHome }) {
   const [mapRef, setMapRef] = useState(null);
   const [flyToLocation, setFlyToLocation] = useState(null);
   const [isLocating, setIsLocating] = useState(false);
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    setIsSearching(true);
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}`);
+      const data = await response.json();
+      if (data && data.length > 0) {
+        const { lat, lon } = data[0];
+        setFlyToLocation([parseFloat(lat), parseFloat(lon)]);
+      } else {
+        setError("Location not found.");
+      }
+    } catch (_err) {
+      setError("Search failed.");
+    }
+    setIsSearching(false);
+  };
+
 
   const handleLocateMe = () => {
     setIsLocating(true);
@@ -228,7 +251,23 @@ const executePipeline = async () => {
         <div className="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
           {activeTab === 'map' && (
             <div className="bg-white/10 hover:bg-white/20/50 border border-white/10 rounded-lg p-4">
-              <h3 className="text-sm font-semibold text-zinc-300 mb-2">Live Bounding Box</h3>
+              <form onSubmit={handleSearch} className="flex gap-2 mb-4 w-full">
+                  <input 
+                    type="text" 
+                    placeholder="Search location..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="flex-1 bg-black/40 border border-white/10 rounded-md px-3 py-2 text-xs text-zinc-300 focus:outline-none focus:border-cyan-500 transition-colors"
+                  />
+                  <button 
+                    type="submit" 
+                    disabled={isSearching || !searchQuery.trim()}
+                    className="bg-white/10 hover:bg-white/20 disabled:opacity-50 text-white px-3 py-2 rounded-md transition-colors flex items-center justify-center"
+                  >
+                    {isSearching ? <Loader2 size={14} className="animate-spin" /> : <Search size={14} />}
+                  </button>
+                </form>
+                <h3 className="text-sm font-semibold text-zinc-300 mb-2">Live Bounding Box</h3>
               {mapBounds ? (
                 <div className="flex flex-col gap-1 text-[11px] font-mono text-zinc-500 bg-black/80 backdrop-blur-3xl p-2 rounded">
                   <div className="flex justify-between">
