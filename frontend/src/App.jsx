@@ -547,7 +547,7 @@ export default function App() {
 
       {currentView === 'home' && (
         <div className="z-10 text-center animate-in fade-in zoom-in duration-500">
-          <h1 className="text-7xl font-black tracking-tighter mb-4 text-white tracking-tighter  font-sans">
+          <h1 className="text-7xl font-bold tracking-tight mb-4 text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
             AtmoPixel
           </h1>
           <p className="text-xl text-zinc-400 font-light mb-12 tracking-widest uppercase">
@@ -606,4 +606,5 @@ export default function App() {
     </div>
   );
 }
+
 
