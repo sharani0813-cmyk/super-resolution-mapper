@@ -73,7 +73,7 @@ function SRMStudio({ initialTab = "map", onBack, onHome }) {
       } else {
         setError("Location not found.");
       }
-    } catch (_err) {
+    } catch {
       setError("Search failed.");
     }
     setIsSearching(false);
