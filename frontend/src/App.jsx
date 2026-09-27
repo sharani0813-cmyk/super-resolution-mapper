@@ -151,34 +151,18 @@ const executePipeline = async () => {
     setSliderPos(50);
   };
 
-  const handleDownloadGeoTIFF = async (e) => {
+  const handleDownloadGeoTIFF = (e) => {
     e.preventDefault();
     if (!result || !result.download_url) return;
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
-      const response = await fetch(`${apiUrl}${result.download_url}`);
-      if (!response.ok) throw new Error('Network response was not ok');
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      
-      const contentDisposition = response.headers.get('content-disposition');
-      let filename = 'geoenhance_hr.tif';
-      if (contentDisposition && contentDisposition.indexOf('filename=') !== -1) {
-        filename = contentDisposition.split('filename=')[1].replace(/["']/g, '');
-      }
-      
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to download the full resolution file.");
-    }
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+    const downloadUrl = `${apiUrl}${result.download_url}`;
+    const a = document.createElement('a');
+    a.href = downloadUrl;
+    a.target = '_blank';
+    a.download = result.download_url.split('/').pop() || 'enhanced_image.tif';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   const handleDownloadImage = (e) => {
