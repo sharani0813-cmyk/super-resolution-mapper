@@ -12,7 +12,7 @@ function MapFlyTo({ location }) {
   const map = useMap();
   useEffect(() => {
     if (location) {
-      map.flyTo(location, 16);
+      map.flyTo(location, 19, { duration: 1.5 });
     }
   }, [location, map]);
   return null;
