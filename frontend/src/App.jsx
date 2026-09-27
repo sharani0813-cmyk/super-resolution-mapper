@@ -199,8 +199,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
       {/* Left Control Drawer */}
       <div className="w-80 bg-black/60 backdrop-blur-xl border-r border-white/10 flex flex-col z-20 ">
         <div className="p-6 border-b border-white/10">
-          <h1 className="text-xl font-bold tracking-wide text-white">GeoEnhance AI</h1>
-          <p className="text-xs text-zinc-500 mt-1 uppercase tracking-wider font-semibold">NTRO SRM Problem ID: 26142</p>
+          <h1 className="text-2xl font-black tracking-tighter text-white">AtmoPixel</h1>
         </div>
 
         <div className="flex border-b border-white/10">
