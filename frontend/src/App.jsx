@@ -106,11 +106,11 @@ function SRMStudio({ initialTab = "map", onBack }) {
       let data;
       if (activeTab === 'upload') {
         if (!file) throw new Error("Please upload a file.");
-        setLoadingStage('Running SR Inference...');
+        setLoadingStage('Enhancing...');
         data = await upscaleImage(file);
       } else if (activeTab === 'map') {
         if (!mapBounds) throw new Error("Map bounds not initialized.");
-        setLoadingStage('Downloading cloud-free STAC imagery from AWS...');
+        setLoadingStage('Extracting & Enhancing...');
         
         data = await extractLiveTile(mapBounds);
       }
@@ -283,7 +283,17 @@ function SRMStudio({ initialTab = "map", onBack }) {
         {/* Loading Overlay */}
         {isProcessing && (
           <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-3xl/80 backdrop-blur-sm flex flex-col items-center justify-center">
-            <Loader2 size={48} className="text-zinc-200 animate-spin mb-4" />
+            
+            {/* Creative Space-Themed Loading Icon */}
+            <div className="relative w-24 h-24 mb-6">
+              <div className="absolute inset-0 border-t-2 border-l-2 border-blue-500/80 rounded-full animate-spin [animation-duration:2s]" />
+              <div className="absolute inset-2 border-r-2 border-b-2 border-white/50 rounded-full animate-spin [animation-duration:1.5s] [animation-direction:reverse]" />
+              <div className="absolute inset-4 border-t-2 border-r-2 border-blue-300/30 rounded-full animate-spin [animation-duration:3s]" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Satellite size={28} className="text-white animate-pulse" />
+              </div>
+            </div>
+
             <h2 className="text-xl font-semibold text-white tracking-wide">{loadingStage}</h2>
             <p className="text-zinc-500 text-sm mt-2">This process may take a few moments...</p>
           </div>
