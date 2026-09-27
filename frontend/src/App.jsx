@@ -45,6 +45,7 @@ function MapCenterTracker({ setCenter, setBounds }) {
 
 function SRMStudio({ initialTab = "map", onBack, onHome }) {
   const [activeTab, setActiveTab] = useState(initialTab);
+  const [error, setError] = useState(null);
   
   
   // Map State
@@ -70,7 +71,7 @@ function SRMStudio({ initialTab = "map", onBack, onHome }) {
         setFlyToLocation([latitude, longitude]);
         setIsLocating(false);
       },
-      (err) => {
+      (_err) => {
         setError("Location access denied. Please enable location permissions in your browser.");
         setIsLocating(false);
       },
@@ -78,11 +79,13 @@ function SRMStudio({ initialTab = "map", onBack, onHome }) {
       );
     };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
       if (initialTab === 'map') {
         handleLocateMe();
       }
-    }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialTab]);
 
 // Upload State
   const [file, setFile] = useState(null);
@@ -93,7 +96,6 @@ function SRMStudio({ initialTab = "map", onBack, onHome }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [loadingStage, setLoadingStage] = useState('');
   const [sliderPos, setSliderPos] = useState(50);
-  const [error, setError] = useState(null);
 
     const handleFileUpload = (e) => {
     const selected = e.target.files[0];
