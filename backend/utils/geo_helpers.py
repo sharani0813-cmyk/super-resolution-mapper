@@ -71,8 +71,11 @@ def stitch_patches(patches, positions, original_shape, patch_size: int, overlap:
         y_out = y * scale_factor
         x_out = x * scale_factor
         
-        stitched[:, y_out:y_out+out_patch_size, x_out:x_out+out_patch_size] += patch * window
-        weights[:, y_out:y_out+out_patch_size, x_out:x_out+out_patch_size] += window
+        h_slice = min(out_patch_size, out_H - y_out)
+        w_slice = min(out_patch_size, out_W - x_out)
+        
+        stitched[:, y_out:y_out+h_slice, x_out:x_out+w_slice] += patch[:, :h_slice, :w_slice] * window[:, :h_slice, :w_slice]
+        weights[:, y_out:y_out+h_slice, x_out:x_out+w_slice] += window[:, :h_slice, :w_slice]
         
     weights[weights == 0] = 1.0 # avoid division by zero
     stitched = stitched / weights
