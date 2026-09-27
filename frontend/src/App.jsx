@@ -203,37 +203,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
         </div>
 
         <div className="flex border-b border-white/10">
-          
-
-                  
-
-
-                  <MapContainer ref={setMapRef} center={viewportCenter} zoom={15} className="w-full h-full" zoomControl={false}>
-                  <TileLayer 
-                    url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-                    maxZoom={19}
-                    attribution="Tiles &copy; Esri"
-                  />
-                  <MapCenterTracker setCenter={setViewportCenter} setBounds={setMapBounds} />
-                    <MapFlyTo location={flyToLocation} />
-                </MapContainer>
-                
-                {/* Visual indicator that the entire visible map viewport is the ROI */}
-                <div className="absolute inset-8 border-2 border-white/30/50 z-[1000] pointer-events-none bg-white/5 backdrop-blur-[0.5px]">
-                  {/* Corner accents */}
-                  <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-white/60 -mt-[3px] -ml-[3px]" />
-                  <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-white/60 -mt-[3px] -mr-[3px]" />
-                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-white/60 -mb-[3px] -ml-[3px]" />
-                  <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white/60 -mb-[3px] -mr-[3px]" />
-                  
-                  {/* Center Reticle */}
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-50">
-                     <div className="w-8 h-8 border border-white/60 rounded-full"></div>
-                     <div className="w-1 h-1 bg-white rounded-full absolute"></div>
-                  </div>
-                </div>
-
-<button 
+          <button 
             className={`flex-1 py-3 text-sm font-medium flex items-center justify-center gap-2 ${activeTab === 'map' ? 'text-zinc-200 border-b-2 border-white/60 bg-white/10 hover:bg-white/20/50' : 'text-zinc-500 hover:bg-white/10 hover:bg-white/20/30 transition-colors'}`}
             onClick={() => { setActiveTab('map'); resetWorkspace(); }}
           >
@@ -334,7 +304,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
                     {isLocating ? <Loader2 size={20} className="animate-spin text-zinc-400" /> : <Navigation size={20} className="text-zinc-200 group-hover:text-white" />}
                   </button>
 
-{/* Zoom Controls */}
+                  {/* Zoom Controls */}
                   <div className="absolute bottom-12 right-12 z-[1000] flex flex-col  rounded-xl overflow-hidden border border-white/20 bg-black/80 backdrop-blur-md">
                     <button 
                       onClick={() => mapRef?.zoomIn()}
@@ -351,6 +321,32 @@ function SRMStudio({ initialTab = "map", onBack }) {
                       <Minus size={20} />
                     </button>
                   </div>
+
+
+                  <MapContainer ref={setMapRef} center={viewportCenter} zoom={15} className="w-full h-full" zoomControl={false}>
+                  <TileLayer 
+                    url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                    maxZoom={19}
+                    attribution="Tiles &copy; Esri"
+                  />
+                  <MapCenterTracker setCenter={setViewportCenter} setBounds={setMapBounds} />
+                    <MapFlyTo location={flyToLocation} />
+                </MapContainer>
+                
+                {/* Visual indicator that the entire visible map viewport is the ROI */}
+                <div className="absolute inset-8 border-2 border-white/30/50 z-[1000] pointer-events-none bg-white/5 backdrop-blur-[0.5px]">
+                  {/* Corner accents */}
+                  <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-white/60 -mt-[3px] -ml-[3px]" />
+                  <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-white/60 -mt-[3px] -mr-[3px]" />
+                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-white/60 -mb-[3px] -ml-[3px]" />
+                  <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white/60 -mb-[3px] -mr-[3px]" />
+                  
+                  {/* Center Reticle */}
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-50">
+                     <div className="w-8 h-8 border border-white/60 rounded-full"></div>
+                     <div className="w-1 h-1 bg-white rounded-full absolute"></div>
+                  </div>
+                </div>
               </>
             ) : (
               <div className="w-full h-full flex items-center justify-center p-12 bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl  ">
