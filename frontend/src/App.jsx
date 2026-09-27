@@ -162,7 +162,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
       document.body.removeChild(a);
     } catch (err) {
       console.error(err);
-      alert("Failed to download the GeoTIFF.");
+      alert("Failed to download the full resolution file.");
     }
   };
 
@@ -250,7 +250,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
           {activeTab === 'upload' && (
             <div className="bg-white/10 hover:bg-white/20/50 border border-white/10 border-dashed rounded-lg p-6 flex flex-col items-center text-center">
               <ImageIcon size={32} className="text-slate-500 mb-2" />
-              <p className="text-sm text-zinc-400 font-medium">Drag & Drop GeoTIFF</p>
+              <p className="text-sm text-zinc-400 font-medium">Drag & Drop File</p>
               <p className="text-xs text-slate-500 mt-1">Accepts .tif, .tiff, .png</p>
               <label className="mt-4 bg-white/10 hover:bg-slate-600 text-white text-xs py-2 px-4 rounded cursor-pointer transition-colors">
                 Browse Files
@@ -460,13 +460,13 @@ function SRMStudio({ initialTab = "map", onBack }) {
                     onClick={handleDownloadGeoTIFF}
                     className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5  shadow-white/10"
                   >
-                    <Download size={14} /> GeoTIFF
+                    <Download size={14} /> Full Res
                   </button>
                   <button 
                     onClick={handleDownloadImage}
                     className="flex-1 bg-transparent border border-slate-600 hover:border-slate-500 hover:bg-white/10 hover:bg-white/20 text-zinc-300 py-2.5 rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
                   >
-                    <Camera size={14} /> PNG
+                    <Camera size={14} /> Snapshot
                   </button>
                 </div>
                 
