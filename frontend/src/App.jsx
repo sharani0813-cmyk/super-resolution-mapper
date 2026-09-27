@@ -74,12 +74,17 @@ function SRMStudio({ initialTab = "map", onBack }) {
         setError("Location access denied. Please enable location permissions in your browser.");
         setIsLocating(false);
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-    );
-  };
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    };
 
-  
-  // Upload State
+    useEffect(() => {
+      if (initialTab === 'map') {
+        handleLocateMe();
+      }
+    }, []);
+
+// Upload State
   const [file, setFile] = useState(null);
   const [originalPreview, setOriginalPreview] = useState(null);
   
@@ -569,3 +574,4 @@ export default function App() {
     </div>
   );
 }
+
