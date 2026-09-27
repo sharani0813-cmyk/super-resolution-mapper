@@ -199,7 +199,7 @@ function SRMStudio({ initialTab = "map", onBack }) {
       {/* Left Control Drawer */}
       <div className="w-80 bg-black/60 backdrop-blur-xl border-r border-white/10 flex flex-col z-20 ">
         <div className="p-6 border-b border-white/10">
-          <h1 className="text-2xl font-black tracking-tighter text-white">AtmoPixel</h1>
+          <h1 className="text-2xl font-black tracking-tighter text-white">GeoEnhance AI</h1>
         </div>
 
         <div className="flex border-b border-white/10">
