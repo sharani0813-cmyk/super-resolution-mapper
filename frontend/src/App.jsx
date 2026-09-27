@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Satellite, Layers, Settings, User, Image as ImageIcon, Camera,
-  UploadCloud, Download, RotateCcw, Activity, Map as MapIcon, ChevronDown, Loader2, Navigation, Plus, Minus
+  UploadCloud, Download, RotateCcw, Activity, Map as MapIcon, ChevronDown, Loader2, Navigation, Plus, Minus, Home
 } from 'lucide-react';
 import { MapContainer, TileLayer, useMapEvents, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -43,7 +43,7 @@ function MapCenterTracker({ setCenter, setBounds }) {
   return null;
 }
 
-function SRMStudio({ initialTab = "map", onBack }) {
+function SRMStudio({ initialTab = "map", onBack, onHome }) {
   const [activeTab, setActiveTab] = useState(initialTab);
   
   
@@ -196,10 +196,13 @@ const executePipeline = async () => {
       
       {/* Left Navigation Bar */}
       <div className="w-16 bg-black/60 backdrop-blur-xl border-r border-white/10 flex flex-col items-center py-4 justify-between z-20">
-        <div className="flex flex-col gap-6">
-          <div className="p-2 bg-white/10 text-zinc-200 rounded-lg cursor-pointer">
-            <Satellite size={24} />
-          </div>
+          <div className="flex flex-col gap-6">
+            <div onClick={onHome} className="p-2 bg-white/10 hover:bg-white/20 text-zinc-200 rounded-lg cursor-pointer transition-colors" title="Go Home">
+              <Home size={24} />
+            </div>
+            <div onClick={onBack} className="p-2 text-zinc-500 hover:text-white cursor-pointer transition-colors" title="Back to Selection">
+              <Satellite size={24} />
+            </div>
           <div className="p-2 text-zinc-500 hover:text-white cursor-pointer transition-colors">
             <Layers size={24} />
           </div>
@@ -525,7 +528,7 @@ export default function App() {
   const [selectedTab, setSelectedTab] = React.useState('map');
 
   if (currentView === 'studio') {
-    return <SRMStudio initialTab={selectedTab} onBack={() => setCurrentView('selection')} />;
+    return <SRMStudio initialTab={selectedTab} onBack={() => setCurrentView('selection')} onHome={() => setCurrentView('home')} />;
   }
 
   return (
